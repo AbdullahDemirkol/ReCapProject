@@ -16,7 +16,8 @@ namespace Business.Concrate
         }
         public string GetByColor(Car car)
         {
-            return _colorDal.GetByColor(car);
+            //return _colorDal.GetByColor(car);
+            return _colorDal.Get(p => p.ColorId == car.ColorId).ColorName;
         }
     }
 }

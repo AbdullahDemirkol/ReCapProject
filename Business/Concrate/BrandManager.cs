@@ -16,7 +16,8 @@ namespace Business.Concrate
         }
         public string GetByBrand(Car car)
         {
-            return _brandDal.GetByBrand(car);
+            /*return _brandDal.GetByBrand(car);*/
+            return _brandDal.Get(p => p.BrandId == car.BrandId).BrandName;
         }
     }
 }
