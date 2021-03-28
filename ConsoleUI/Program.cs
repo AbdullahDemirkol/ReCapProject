@@ -19,10 +19,34 @@ namespace ConsoleUI
                 ColorId = 3,
                 BrandId = 1,
                 DailyPrice = 500,
-                ModelYear = 2015,
+                ModelYear = "2015",
                 Description = "Audi R8",
             };
             carManager.Add(car);
+            
+            //BadMethod(carManager, brandManager, colorManager);
+            
+            GoodMethod(carManager);
+
+            carManager.Remove(car);
+        }
+
+        private static void GoodMethod(CarManager carManager)
+        {
+            foreach (var item in carManager.GetCarDetailsDto())
+            {
+
+                Console.WriteLine("Model Yılı:" + item.ModelYear);
+                Console.WriteLine("Markası:" + item.BrandName);
+                Console.WriteLine("Modeli:" + item.Description);
+                Console.WriteLine("Rengi:" + item.ColorName);
+                Console.WriteLine("Günlük Kiralama Ücreti:" + item.DailyPrice);
+                Console.WriteLine("--------------------");
+            }
+        }
+
+        private static void BadMethod(CarManager carManager, BrandManager brandManager, ColorManager colorManager)
+        {
             foreach (var item in carManager.GetAll())
             {
                 Console.WriteLine("Model Yılı:" + item.ModelYear);

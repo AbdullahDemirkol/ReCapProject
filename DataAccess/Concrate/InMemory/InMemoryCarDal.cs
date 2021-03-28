@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrate;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,11 @@ namespace DataAccess.Concrate.InMemory
         {
             _cars = new List<Car>()
             {
-                new Car{Id=1,BrandId=1,ColorId=1,DailyPrice=500,ModelYear=2020,Description=""},
-                new Car{Id=2,BrandId=2,ColorId=2,DailyPrice=300,ModelYear=2019,Description=""},
-                new Car{Id=3,BrandId=3,ColorId=4,DailyPrice=450,ModelYear=2020,Description=""},
-                new Car{Id=4,BrandId=4,ColorId=3,DailyPrice=700,ModelYear=2021,Description=""},
-                new Car{Id=5,BrandId=5,ColorId=1,DailyPrice=250,ModelYear=2019,Description=""},
+                new Car{Id=1,BrandId=1,ColorId=1,DailyPrice=500,ModelYear="2020",Description=""},
+                new Car{Id=2,BrandId=2,ColorId=2,DailyPrice=300,ModelYear="2019",Description=""},
+                new Car{Id=3,BrandId=3,ColorId=4,DailyPrice=450,ModelYear="2020",Description=""},
+                new Car{Id=4,BrandId=4,ColorId=3,DailyPrice=700,ModelYear="2021",Description=""},
+                new Car{Id=5,BrandId=5,ColorId=1,DailyPrice=250,ModelYear="2019",Description=""},
             };
         }
         public void Add(Car car)
@@ -57,6 +58,11 @@ namespace DataAccess.Concrate.InMemory
         public List<Car> GetAllByColor(int colorId)
         {
             return _cars.Where(p=>p.ColorId==colorId).ToList();
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)
