@@ -1,4 +1,6 @@
 ﻿using Business.Concrate;
+using Business.Constans;
+using Core.Utilities.Results;
 using DataAccess.Concrate.EntityFramework;
 using DataAccess.Concrate.InMemory;
 using Entities.Concrate;
@@ -10,10 +12,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //InMemory();
             CarManager carManager = new CarManager(new EfCarDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
             Car car = new Car()
             {
                 ColorId = 3,
@@ -22,18 +21,16 @@ namespace ConsoleUI
                 ModelYear = "2015",
                 Description = "Audi R8",
             };
-            carManager.Add(car);
-            
-            //BadMethod(carManager, brandManager, colorManager);
-            
+            Console.WriteLine(carManager.Add(car).Message);
+            Console.WriteLine("-----------------------------------");
             GoodMethod(carManager);
-
-            carManager.Remove(car);
+            Console.WriteLine(carManager.Remove(car).Message);
         }
 
         private static void GoodMethod(CarManager carManager)
         {
-            foreach (var item in carManager.GetCarDetailsDto())
+            Console.WriteLine(carManager.GetCarDetailsDto().Message);
+            foreach (var item in carManager.GetCarDetailsDto().Data)
             {
 
                 Console.WriteLine("Model Yılı:" + item.ModelYear);
@@ -44,33 +41,5 @@ namespace ConsoleUI
                 Console.WriteLine("--------------------");
             }
         }
-
-        private static void BadMethod(CarManager carManager, BrandManager brandManager, ColorManager colorManager)
-        {
-            foreach (var item in carManager.GetAll())
-            {
-                Console.WriteLine("Model Yılı:" + item.ModelYear);
-                Console.WriteLine("Markası:" + brandManager.GetByBrand(item));
-                Console.WriteLine("Modeli:" + item.Description);
-                Console.WriteLine("Rengi:" + colorManager.GetByColor(item));
-                Console.WriteLine("Günlük Kiralama Ücreti:" + item.DailyPrice);
-                Console.WriteLine("--------------------");
-            }
-        }
-
-        //private static void InMemory()
-        //{
-        //    CarManager carManager = new CarManager(new InMemoryCarDal());
-        //    BrandManager brandManager = new BrandManager(new InMemoryBrandDal());
-        //    ColorManager colorManager = new ColorManager(new InMemoryColorDal());
-        //    foreach (var item in carManager.GetAll())
-        //    {
-        //        Console.WriteLine("Model Yılı:" + item.ModelYear);
-        //        Console.WriteLine("Markası:" + brandManager.GetByBrand(item));
-        //        Console.WriteLine("Rengi:" + colorManager.GetByColor(item));
-        //        Console.WriteLine("Günlük Kiralama Ücreti:" + item.DailyPrice);
-        //        Console.WriteLine("--------------------");
-        //    }
-        //}
     }
 }
