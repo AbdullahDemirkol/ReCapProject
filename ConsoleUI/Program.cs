@@ -94,7 +94,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Kiralanan Arabanın Markası {0} --- Model {1} --- Renk {2}", item.BrandName, item.CarDescription, item.ColorName);
                 Console.WriteLine("Kiralayan Kişinin Ismi {0} {1}", item.CustomerFirstName, item.CustomerLastName);
-                Console.WriteLine("Kiraladınan Firma {0}", item.CompanyName);
+                Console.WriteLine("Kiralanılan Firma {0}", item.CompanyName);
                 Console.WriteLine("Kiralama Tarihi {0}", item.RentDate);
                 Console.WriteLine("Kiralama Süresi Sonu {0}", item.ReturnDate);
                 Console.WriteLine("Kiralama Ucreti {0} Tl", item.DailyPrice);
