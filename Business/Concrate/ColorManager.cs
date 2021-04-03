@@ -20,6 +20,10 @@ namespace Business.Concrate
 
         public IResult Add(Color color)
         {
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorErrorAdded);
+            }
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorSuccessAdded);
         }
@@ -42,11 +46,20 @@ namespace Business.Concrate
 
         public IDataResult<Color> GetById(int colorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId), Messages.ColorGetByIdListed);
+            var result = _colorDal.Get(p => p.ColorId == colorId);
+            if (result==null)
+            {
+                return new ErrorDataResult<Color>(Messages.ColotErrorGetById);
+            }
+            return new SuccessDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId), Messages.ColorSuccessGetById);
         }
 
         public IResult Update(Color color)
         {
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorErrorUpdated);
+            }
             _colorDal.Update(color);
             return new SuccessResult(Messages.ColorSuccessUpdated);
         }

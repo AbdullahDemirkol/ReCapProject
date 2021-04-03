@@ -36,7 +36,12 @@ namespace Business.Concrate
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>( _userDal.GetAll(),Messages.UserListed);
+            var result = _userDal.GetAll();
+            if (result == null)
+            {
+                return new ErrorDataResult<List<User>>(Messages.UserErrorListed);
+            }
+            return new SuccessDataResult<List<User>>( result,Messages.UserSuccessListed);
         }
 
         public IDataResult<User> GetById(int userId)

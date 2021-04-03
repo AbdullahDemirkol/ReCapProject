@@ -24,18 +24,12 @@ namespace Business.Concrate
             {
                 return new ErrorResult(Messages.MaintenanceTime);
             }
-            else
+            if (car.DailyPrice > 0 || car.Description.Length > 2)
             {
-                if (car.DailyPrice > 0 && car.Description.Length > 2)
-                {
-                    _carDal.Add(car);
-                    return new SuccessResult(Messages.SuccesAddCar);
-                }
-                else
-                {
-                    return new ErrorResult(Messages.ErrorAddCar);
-                }
+                return new ErrorResult(Messages.ErrorAddCar);
             }
+            _carDal.Add(car);
+            return new SuccessResult(Messages.SuccesAddCar);
         }
         public IDataResult<List<Car>> GetAll()
         {
@@ -43,7 +37,12 @@ namespace Business.Concrate
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
+            var result = _carDal.GetAll();
+            if (result==null)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.CarsErrorListed);
+            }
+            return new SuccessDataResult<List<Car>>(result,Messages.CarsSuccessListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsDto()
@@ -52,7 +51,12 @@ namespace Business.Concrate
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.CarsDetailListed);
+            var result = _carDal.GetCarDetails();
+            if (result==null)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.CarDetailsErrorListed);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(result,Messages.CarDetailsSuccessListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int brandid)
@@ -61,7 +65,12 @@ namespace Business.Concrate
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p=>p.BrandId==brandid),Messages.SelectedBrandListed);
+            var result = _carDal.GetAll(p => p.BrandId == brandid);
+            if (result==null)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.CarBrandListedNull);
+            }
+            return new SuccessDataResult<List<Car>>(result, Messages.SelectedBrandListed);
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int colorid)
@@ -70,7 +79,12 @@ namespace Business.Concrate
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == colorid),Messages.SelectedColorListed);
+            var result = _carDal.GetAll(p => p.BrandId == colorid);
+            if (result==null)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.CarColorListedNull);
+            }
+            return new SuccessDataResult<List<Car>>(result, Messages.SelectedColorListed);
         }
 
         public IResult Remove(Car car)
@@ -79,11 +93,21 @@ namespace Business.Concrate
             {
                 return new ErrorResult(Messages.MaintenanceTime);
             }
-            else
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.SuccessRemoveCar);
+        }
+        public IResult Update(Car car)
+        {
+            if (DateTime.Now.Hour == 24)
             {
-                _carDal.Delete(car);
-                return new SuccessResult(Messages.SuccessRemoveCar);
+                return new ErrorResult(Messages.MaintenanceTime);
             }
+            if (car.DailyPrice <= 0 || car.Description.Length < 2)
+            {
+                return new ErrorResult(Messages.ErrorUpdateCar);
+            }
+            _carDal.Update(car);
+            return new SuccessResult(Messages.SuccesUpdateCar);
         }
     }
 }

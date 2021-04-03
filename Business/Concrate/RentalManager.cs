@@ -22,12 +22,20 @@ namespace Business.Concrate
 
         public IResult Add(Rental rental)
         {
+            if (rental.RentDate==null || rental.CustomerId <= 0 || rental.CarId <= 0)
+            {
+                return new ErrorResult(Messages.RentalErrorAdded);
+            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalSuccessAdded);
         }
 
         public IResult Update(Rental rental)
         {
+            if (rental.RentDate == null || rental.CustomerId <= 0 || rental.CarId <= 0)
+            {
+                return new ErrorResult(Messages.RentalErrorUpdated);
+            }
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalSuccessUpdated);
 
@@ -40,16 +48,22 @@ namespace Business.Concrate
 
         public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
+            var result = _rentalDal.GetAll();
+            //if (result == null)
+            //{
+            //    return new ErrorDataResult<List<Rental>>(Messages.RentalErrorListed);
+            //}
+            return new SuccessDataResult<List<Rental>>(result, Messages.RentalSuccessListed);
         }
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetailsDto()
         {
-            if (DateTime.Now.Hour == 24)
+            var result = _rentalDal.GetRentalDetailsDto();
+            if (result==null)
             {
-                return new ErrorDataResult<List<RentalDetailDto>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<RentalDetailDto>>(Messages.RentalDetailErrorListed);
             }
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetailsDto(),Messages.RentalDetailListed);
+            return new SuccessDataResult<List<RentalDetailDto>>(result,Messages.RentalDetailSuccessListed);
         }
 
     }

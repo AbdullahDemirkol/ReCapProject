@@ -20,6 +20,10 @@ namespace Business.Concrate
 
         public IResult Add(Brand brand)
         {
+            if (brand.BrandName.Length < 2 )
+            {
+                return new ErrorResult(Messages.BrandErrorAdded);
+            }
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandSuccessAdded);
         }
@@ -42,11 +46,20 @@ namespace Business.Concrate
 
         public IDataResult<Brand> GetById(int brandId)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(p => p.BrandId == brandId), Messages.BrandGetByIdListed);
+            var result = _brandDal.Get(p => p.BrandId == brandId);
+            if (result==null)
+            {
+                return new ErrorDataResult<Brand>(Messages.BrandErrorGetById);
+            }
+            return new SuccessDataResult<Brand>(result, Messages.BrandSuccessGetById);
         }
 
         public IResult Update(Brand brand)
         {
+            if (brand.BrandName.Length < 2)
+            {
+                return new ErrorResult(Messages.BrandErrorUpdated);
+            }
             _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandSuccessUpdated);
         }

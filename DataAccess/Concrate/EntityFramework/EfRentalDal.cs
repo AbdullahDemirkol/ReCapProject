@@ -17,7 +17,7 @@ namespace DataAccess.Concrate.EntityFramework
         {
             using (RecapContext context = new RecapContext())
             {
-                var result = from ren in context.Rentals 
+                var result = from ren in context.Rentals
                              join car in context.Cars
                              on ren.CarId equals car.Id
                              join cus in context.Customers
@@ -32,14 +32,14 @@ namespace DataAccess.Concrate.EntityFramework
                              select new RentalDetailDto
                              {
                                  CarDescription = car.Description,
-                                 ColorName=col.ColorName,
-                                 BrandName=bra.BrandName,
-                                 CompanyName=cus.CompanyName,
-                                 CustomerFirstName=user.FirstName,
-                                 CustomerLastName=user.LastName,
-                                 DailyPrice=car.DailyPrice,
-                                 RentDate=ren.RentDate,
-                                 ReturnDate=ren.ReturnDate,
+                                 ColorName = col.ColorName,
+                                 BrandName = bra.BrandName,
+                                 CompanyName = cus.CompanyName,
+                                 CustomerFirstName = user.FirstName,
+                                 CustomerLastName = user.LastName,
+                                 DailyPrice = car.DailyPrice,
+                                 RentDate = ren.RentDate,
+                                 ReturnDate = (DateTime)ren.ReturnDate,
                              };
 
                 return result.ToList();

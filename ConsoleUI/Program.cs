@@ -16,7 +16,7 @@ namespace ConsoleUI
             //CarTest();
             //ColorTest();
             //UserTest();
-            //CustomerTest();
+            CustomerTest();
             //BrandTest();
         }
 
@@ -99,6 +99,10 @@ namespace ConsoleUI
                 Console.WriteLine("Kiralama Süresi Sonu {0}", item.ReturnDate);
                 Console.WriteLine("Kiralama Ucreti {0} Tl", item.DailyPrice);
                 Console.WriteLine("--------------------------------------------------");
+            }
+            foreach (var item in rentalManager.GetAll().Data)
+            {
+                Console.WriteLine(item.Id);
             }
         }
         private static void CarTest()

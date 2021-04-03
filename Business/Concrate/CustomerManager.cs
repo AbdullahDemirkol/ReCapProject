@@ -21,7 +21,7 @@ namespace Business.Concrate
 
         public IResult Add(Customer customer)
         {
-            if (customer.CompanyName.Length<2)
+            if (customer.CompanyName.Length<2 || customer.UserId<=0)
             {
                 return new ErrorResult(Messages.CustomerErrorAdded);
             }
@@ -37,7 +37,12 @@ namespace Business.Concrate
 
         public IDataResult<List<CustomerDetailDto>> GetAll()
         {
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.CustomerDetailDto(), Messages.CustomerListed);
+            var result = _customerDal.CustomerDetailDto();
+            if (result==null)
+            {
+                return new ErrorDataResult<List<CustomerDetailDto>>(Messages.CustomerDetailsErrorListed);
+            }
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.CustomerDetailDto(), Messages.CustomerDetailsSuccessListed);
         }
 
         public IDataResult<Customer> GetById(int userId)
@@ -52,6 +57,10 @@ namespace Business.Concrate
 
         public IResult Update(Customer customer)
         {
+            if (customer.CompanyName.Length < 2 || customer.UserId<=0) 
+            {
+                return new ErrorResult(Messages.CustomerErrorUpdated);
+            }
             _customerDal.Add(customer);
             return new SuccessResult(Messages.CustomerSuccessUpdated);
         }
