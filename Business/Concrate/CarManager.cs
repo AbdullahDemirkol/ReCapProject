@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingCornerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,6 +22,7 @@ namespace Business.Concrate
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             if (DateTime.Now.Hour == 24)
@@ -97,15 +99,12 @@ namespace Business.Concrate
             _carDal.Delete(car);
             return new SuccessResult(Messages.SuccessRemoveCar);
         }
+
         public IResult Update(Car car)
         {
             if (DateTime.Now.Hour == 24)
             {
                 return new ErrorResult(Messages.MaintenanceTime);
-            }
-            if (car.DailyPrice <= 0 || car.Description.Length < 2)
-            {
-                return new ErrorResult(Messages.ErrorUpdateCar);
             }
             _carDal.Update(car);
             return new SuccessResult(Messages.SuccesUpdateCar);
