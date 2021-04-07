@@ -68,10 +68,10 @@ namespace Web_API.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPost("remove")]
-        public IActionResult Remove(Car car)
+        [HttpPost("delete")]
+        public IActionResult Delete(Car car)
         {
-            var result = _carService.Remove(car);
+            var result = _carService.Delete(car);
             if (result.Success)
             {
                 return Ok(result);

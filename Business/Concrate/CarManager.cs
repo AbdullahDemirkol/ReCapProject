@@ -90,7 +90,7 @@ namespace Business.Concrate
             return new SuccessDataResult<List<Car>>(result, Messages.SelectedColorListed);
         }
 
-        public IResult Remove(Car car)
+        public IResult Delete(Car car)
         {
             if (DateTime.Now.Hour == 24)
             {
@@ -100,6 +100,7 @@ namespace Business.Concrate
             return new SuccessResult(Messages.SuccessRemoveCar);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             if (DateTime.Now.Hour == 24)

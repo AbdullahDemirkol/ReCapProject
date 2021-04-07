@@ -129,7 +129,7 @@ namespace ConsoleUI
                 Console.WriteLine("--------------------");
             }
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine(carManager.Remove(car).Message);
+            Console.WriteLine(carManager.Delete(car).Message);
         }
     }
 }

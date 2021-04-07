@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrate;
@@ -19,27 +21,13 @@ namespace Business.Concrate
             _rentalDal = rentalDal;
         }
 
-
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            if (rental.RentDate==null || rental.CustomerId <= 0 || rental.CarId <= 0)
-            {
-                return new ErrorResult(Messages.RentalErrorAdded);
-            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalSuccessAdded);
         }
 
-        public IResult Update(Rental rental)
-        {
-            if (rental.RentDate == null || rental.CustomerId <= 0 || rental.CarId <= 0)
-            {
-                return new ErrorResult(Messages.RentalErrorUpdated);
-            }
-            _rentalDal.Update(rental);
-            return new SuccessResult(Messages.RentalSuccessUpdated);
-
-        }
         public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
@@ -49,10 +37,10 @@ namespace Business.Concrate
         public IDataResult<List<Rental>> GetAll()
         {
             var result = _rentalDal.GetAll();
-            //if (result == null)
-            //{
-            //    return new ErrorDataResult<List<Rental>>(Messages.RentalErrorListed);
-            //}
+            if (result == null)
+            {
+                return new ErrorDataResult<List<Rental>>(Messages.RentalErrorListed);
+            }
             return new SuccessDataResult<List<Rental>>(result, Messages.RentalSuccessListed);
         }
 
@@ -64,6 +52,14 @@ namespace Business.Concrate
                 return new ErrorDataResult<List<RentalDetailDto>>(Messages.RentalDetailErrorListed);
             }
             return new SuccessDataResult<List<RentalDetailDto>>(result,Messages.RentalDetailSuccessListed);
+        }
+        
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Update(Rental rental)
+        {
+            _rentalDal.Update(rental);
+            return new SuccessResult(Messages.RentalSuccessUpdated);
+
         }
 
     }
