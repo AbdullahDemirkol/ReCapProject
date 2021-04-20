@@ -29,8 +29,6 @@ namespace Business.Concrate
             {
                 return new ErrorResult(Messages.MaintenanceTime);
             }
-            ValidationTool.Validate(new CarValidator(), car);
-
             _carDal.Add(car);
             return new SuccessResult(Messages.SuccesAddCar);
         }

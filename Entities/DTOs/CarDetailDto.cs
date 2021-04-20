@@ -12,5 +12,6 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string ColorName { get; set; }
         public decimal DailyPrice { get; set; }
+        public List<string> CarImages { get; set; }
     }
 }
