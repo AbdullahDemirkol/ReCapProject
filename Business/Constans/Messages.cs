@@ -1,4 +1,4 @@
-﻿using Entities.Concrate;
+﻿using Core.Entities.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -91,5 +91,15 @@ namespace Business.Constans
         public static string CarImageLimitExceded = "Bu arabaya ait max 5 resim bulunmaktadır.";
         public static string CarImageNotFound="Araba resmi bulunmamaktadır.";
         public static string CarImageErrorGet="Seçilen id'ye ait resim bulunmamaktadır.";
+        
+        
+        public static string UserNotFound="Kullanıcı bulunamadı.";
+        public static string PasswordError="Şifre hatalı.";
+        public static string SuccesfullLogin="Giriş başarılı.";
+        
+        
+        public static string UserAlreadyExists= "Kullanıcı mevcut.";
+        public static string UserRegistered="Kullanıcı başarıyla eklendi.";
+        public static string AccessTokenCreated="Access token başarıyla oluşturuldu.";
     }
 }

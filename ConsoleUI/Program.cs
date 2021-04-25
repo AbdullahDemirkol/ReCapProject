@@ -1,11 +1,14 @@
-﻿using Business.Concrate;
+﻿using Business.Concrete;
 using Business.Constans;
 using Core.Utilities.Results;
 using DataAccess.Concrate.EntityFramework;
 using DataAccess.Concrate.InMemory;
-using Entities.Concrate;
+using Core.Entities.Concrete;
 using System;
 using System.IO;
+using Entities.Concrete;
+using Core.Entities.Dtos;
+using Core.Utilities.Security.Hashing;
 
 namespace ConsoleUI
 {
@@ -67,13 +70,24 @@ namespace ConsoleUI
 
         private static void UserTest()
         {
+            byte[] passwordHash, passwordSalt;
             UserManager userManager = new UserManager(new EfUserDal());
-            User user = new User()
+            UserForRegisterDto userForRegisterDto = new UserForRegisterDto()
             {
                 FirstName = "Hande",
                 LastName = "Güler",
                 Email = "handegüler@gmail.com",
                 Password = "12345678910",
+            };
+            HashingHelper.CreatePasswordHas(userForRegisterDto.Password, out passwordHash, out passwordSalt);
+            var user = new User
+            {
+                Email = userForRegisterDto.Email,
+                FirstName = userForRegisterDto.FirstName,
+                LastName = userForRegisterDto.LastName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true
             };
             Console.WriteLine(userManager.Add(user).Message);
             foreach (var item in userManager.GetAll().Data)

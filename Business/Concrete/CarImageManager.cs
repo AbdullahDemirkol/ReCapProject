@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Business.Concrate
+namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {

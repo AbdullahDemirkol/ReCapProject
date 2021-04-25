@@ -1,4 +1,4 @@
-﻿using Entities.Concrate;
+﻿using Core.Entities.Concrete;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,6 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.Email).EmailAddress().WithMessage("Geçerli bir eposta adresi gerekli.");
             RuleFor(p => p.Email).NotEmpty();
             RuleFor(p => p.Email).MinimumLength(6);
-            RuleFor(p => p.Password).NotEmpty();
-            RuleFor(p => p.Password).MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı.");
 
         }
 
