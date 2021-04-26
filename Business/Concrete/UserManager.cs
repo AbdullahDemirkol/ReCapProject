@@ -23,7 +23,7 @@ namespace Business.Concrete
 
         public User GetByEmail(string email)
         {
-            return _userDal.Get(filter: p => p.Email == email);
+            return _userDal.Get(u => u.Email == email);
         }
         public List<OperationClaim> GetClaims(User user)
         {

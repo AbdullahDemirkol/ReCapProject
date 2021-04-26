@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using Entities.DTOs;
 
-namespace DataAccess.Concrate.EntityFramework
+namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, RecapContext>, ICustomerDal
     {

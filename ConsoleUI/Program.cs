@@ -1,8 +1,8 @@
 ﻿using Business.Concrete;
 using Business.Constans;
 using Core.Utilities.Results;
-using DataAccess.Concrate.EntityFramework;
-using DataAccess.Concrate.InMemory;
+using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.InMemory;
 using Core.Entities.Concrete;
 using System;
 using System.IO;
