@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
@@ -22,12 +23,6 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
-        {
-            var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user,claims);
-            return new SuccessDataResult<AccessToken>(accessToken,Messages.AccessTokenCreated);
-        }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
@@ -61,6 +56,14 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user,Messages.UserRegistered);
         }
 
+
+
+        public IDataResult<AccessToken> CreateAccessToken(User user)
+        {
+            var claims = _userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+        }
         public IResult UserExists(string email)
         {
             if (_userService.GetByEmail(email)!=null)

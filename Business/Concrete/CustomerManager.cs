@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,6 +22,8 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+
+        [SecuredOperation("brand.add,moderator")]
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
@@ -28,12 +31,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerSuccessAdded);
         }
 
+
+        [SecuredOperation("brand.delete,admin")]
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
             return new SuccessResult(Messages.CustomerSuccessDeleted);
         }
 
+
+        [SecuredOperation("brand.list,moderator")]
         public IDataResult<List<CustomerDetailDto>> GetAll()
         {
             var result = _customerDal.CustomerDetailDto();
@@ -44,6 +51,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.CustomerDetailDto(), Messages.CustomerDetailsSuccessListed);
         }
 
+
+        [SecuredOperation("brand.list,moderator")]
         public IDataResult<Customer> GetById(int userId)
         {
             var result = _customerDal.Get(p => p.UserId == userId);
@@ -54,6 +63,8 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(result, Messages.CustomerSuccessGetByUserId);
         }
 
+
+        [SecuredOperation("brand.update,admin")]
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer customer)
         {

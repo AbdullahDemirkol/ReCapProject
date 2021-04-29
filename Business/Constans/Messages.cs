@@ -3,6 +3,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constans
@@ -101,5 +102,6 @@ namespace Business.Constans
         public static string UserAlreadyExists= "Kullanıcı mevcut.";
         public static string UserRegistered="Kullanıcı başarıyla eklendi.";
         public static string AccessTokenCreated="Access token başarıyla oluşturuldu.";
+        public static string AuthorizationDenied= "Yetkiniz yok.";
     }
 }

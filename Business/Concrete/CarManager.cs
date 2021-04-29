@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingCornerns.Validation;
 using Core.Utilities.Results;
@@ -22,7 +24,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             if (DateTime.Now.Hour == 24)
@@ -32,6 +36,10 @@ namespace Business.Concrete
             _carDal.Add(car);
             return new SuccessResult(Messages.SuccesAddCar);
         }
+
+
+        [SecuredOperation("car.list,user")]
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour == 24)
@@ -46,6 +54,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(result,Messages.CarsSuccessListed);
         }
 
+
+        [SecuredOperation("car.list,user")]
+        [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetailsDto()
         {
             if (DateTime.Now.Hour == 24)
@@ -60,6 +71,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(result,Messages.CarDetailsSuccessListed);
         }
 
+
+        [SecuredOperation("car.list,user")]
+        [CacheAspect]
         public IDataResult<List<Car>> GetCarsByBrandId(int brandid)
         {
             if (DateTime.Now.Hour == 24)
@@ -74,6 +88,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(result, Messages.SelectedBrandListed);
         }
 
+
+        [SecuredOperation("car.list,user")]
+        [CacheAspect]
         public IDataResult<List<Car>> GetCarsByColorId(int colorid)
         {
             if (DateTime.Now.Hour == 24)
@@ -88,6 +105,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(result, Messages.SelectedColorListed);
         }
 
+
+        [SecuredOperation("car.delete,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             if (DateTime.Now.Hour == 24)
@@ -98,7 +118,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessRemoveCar);
         }
 
+
+        [SecuredOperation("car.update,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             if (DateTime.Now.Hour == 24)

@@ -8,6 +8,8 @@ using Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Business.BusinessAspects.Autofac;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete
 {
@@ -25,10 +27,14 @@ namespace Business.Concrete
         {
             return _userDal.Get(u => u.Email == email);
         }
+
+
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);
         }
+
+
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
@@ -37,11 +43,15 @@ namespace Business.Concrete
         }
 
 
+        [SecuredOperation("user.delete,admin")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserSuccessDeleted);
         }
+
+
+        [SecuredOperation("user.list,moderator")]
         public IDataResult<List<User>> GetAll()
         {
             var result = _userDal.GetAll();
@@ -51,6 +61,9 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<User>>( result,Messages.UserSuccessListed);
         }
+
+
+        [SecuredOperation("user.list,moderator")]
         public IDataResult<User> GetById(int userId)
         {
             var result = _userDal.Get(p => p.Id == userId);
@@ -60,11 +73,15 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<User>(result, Messages.UserSuccessGetById);
         }
+
+
+        [SecuredOperation("user.update,admin")]
         [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserSuccessUpdated);
         }
+
     }
 }
