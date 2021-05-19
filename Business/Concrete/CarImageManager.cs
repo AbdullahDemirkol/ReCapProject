@@ -86,7 +86,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("carimage.list,user")]
         [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
@@ -99,7 +98,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("carimage.list,user")]
         [CacheAspect]
         public IDataResult<List<CarImage>> GetByCarId(int carId)
         {

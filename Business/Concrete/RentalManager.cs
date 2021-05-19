@@ -10,6 +10,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -29,8 +30,16 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
         {
-            _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalSuccessAdded);
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            if (result.Any())
+            {
+                return new ErrorResult(Messages.RentalNullReturnDate);
+            }
+            else
+            {
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalSuccessAdded);
+            }
         }
 
 
@@ -42,8 +51,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalSuccessDeleted);
         }
 
-
-        [SecuredOperation("rental.list,moderator")]
+        
         [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
@@ -56,7 +64,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("rental.list,moderator")]
         [CacheAspect]
         public IDataResult<List<RentalDetailDto>> GetRentalDetailsDto()
         {

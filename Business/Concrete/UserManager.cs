@@ -51,7 +51,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("user.list,moderator")]
         public IDataResult<List<User>> GetAll()
         {
             var result = _userDal.GetAll();
@@ -63,7 +62,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("user.list,moderator")]
         public IDataResult<User> GetById(int userId)
         {
             var result = _userDal.Get(p => p.Id == userId);

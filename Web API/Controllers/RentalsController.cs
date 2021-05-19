@@ -28,7 +28,7 @@ namespace Web_API.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getrentalsdetail")]
+        [HttpGet("getrentaldetails")]
         public IActionResult GetRentalsDetail()
         {
             var result = _rentalService.GetRentalDetailsDto();

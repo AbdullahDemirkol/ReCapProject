@@ -38,20 +38,30 @@ namespace Web_API.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getbybrandid")]
-        public IActionResult GetByBrandId(int brandid)
+        [HttpGet("getcardetailbyid")]
+        public ActionResult GetCarDetailById(int id)
         {
-            var result = _carService.GetCarsByBrandId(brandid);
+            var result = _carService.GetCarDetailById(id);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-        [HttpGet("getbycolorid")]
-        public IActionResult GetByColorId(int colorid)
+        [HttpGet("getbybrandname")]
+        public IActionResult GetByBrandId(string brandName)
         {
-            var result = _carService.GetCarsByColorId(colorid);
+            var result = _carService.GetCarsByBrandName(brandName);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getbycolorname")]
+        public IActionResult GetByColorId(string colorName)
+        {
+            var result = _carService.GetCarsByColorName(colorName);
             if (result.Success)
             {
                 return Ok(result);

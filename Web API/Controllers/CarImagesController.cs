@@ -30,7 +30,7 @@ namespace Web_API.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbycarid")]
-        public ActionResult GetByCarId([FromForm(Name = ("CarId"))]  int carId)
+        public ActionResult GetByCarId(int carId)
         {
             var result = _carImageService.GetByCarId(carId);
             if (result.Success)

@@ -40,7 +40,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("brand.list,user")]
         public IDataResult<List<Color>> GetAll()
         {
             var result = _colorDal.GetAll();
@@ -52,7 +51,6 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("brand.list,moderator")]
         public IDataResult<Color> GetById(int colorId)
         {
             var result = _colorDal.Get(p => p.ColorId == colorId);

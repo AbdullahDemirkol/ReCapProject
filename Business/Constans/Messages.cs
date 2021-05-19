@@ -25,6 +25,8 @@ namespace Business.Constans
         public static string CarColorListedNull="Renge ait arabalar bulunmamaktadır.";
         public static string CarsErrorListed="Arabalar bulunmamaktadır.";
         public static string CarDetailsErrorListed="Araba detayları bulunmamaktadır.";
+        public static string CarDetailListedNull = "Araba detayı bulunmamaktadır.";
+        public static string SelectedCarDetailListed = "Seçilen araba detayı listelendi.";
 
         public static string RentalSuccessAdded="Kiralama eklendi.";
         public static string RentalSuccessUpdated="Kiralama güncellendi.";
@@ -103,5 +105,6 @@ namespace Business.Constans
         public static string UserRegistered="Kullanıcı başarıyla eklendi.";
         public static string AccessTokenCreated="Access token başarıyla oluşturuldu.";
         public static string AuthorizationDenied= "Yetkiniz yok.";
+        public static string RentalNullReturnDate="Araba kiralanmış ve teslim edilmemiş.";
     }
 }
